@@ -5,7 +5,7 @@ close all;
 % clear all;
 
 %choose the path to the videos (you'll be able to choose one with the GUI)
-base_path = 'sequences/';
+base_path = '../Data/';
 
 %parameters according to the paper
 params.padding = 1.0;         			   % extra area surrounding the target
