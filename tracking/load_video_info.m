@@ -1,11 +1,8 @@
 % function [img_files, pos, target_sz, ground_truth, video_path] = load_video_info(video_path)
-function [img_files, video_path] = load_video_info(video_path)
+function [img_files, video_path] = load_video_info(video_path, start_frame, end_frame)
 % [img_files, pos, target_sz, ground_truth, video_path] = load_video_info(video_path)
 
-text_files = dir([video_path '*_frames.txt']);
-f = fopen([video_path text_files(1).name]);
-frames = textscan(f, '%f,%f');
-fclose(f);
+frames = {start_frame, end_frame};
 % 
 % text_files = dir([video_path '*_gt.txt']);
 % assert(~isempty(text_files), 'No initial position and ground truth (*_gt.txt) to load.')

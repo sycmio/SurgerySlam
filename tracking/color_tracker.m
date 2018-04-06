@@ -149,7 +149,7 @@ for frame = 1:num_frames,
     time = time + toc;
     
     %visualization
-    pause(0.1);
+%     pause(0.1);
     if visualization == 1
 %         rect_position = [pos([2,1]) - target_sz([2,1])/2, target_sz([2,1])];
         rect_position = [pos([2,1]), [5,5]];
