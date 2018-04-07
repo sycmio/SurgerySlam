@@ -6,7 +6,7 @@ function residuals = rodriguesResidual(P,p1,p2,K1,K2,M_diff,x)
 %   p2 - Nx2 set of points in right camera
 %   K1 - 3x3 camera calibration matrix 1 of left camera
 %   K2 - 3x3 camera calibration matrix 2 of right camera
-%   M_diff - 4x4 Extrinsic matrix from left to right (Right M2_homo = Left M1_homo * M_diff)
+%   M_diff - 4x4 Extrinsic matrix from left to right (Right M2_homo - Left M1_homo = M_diff)
 %   x - 6x1 flattened concatenation of r_1 and t_1
 
 % Output:

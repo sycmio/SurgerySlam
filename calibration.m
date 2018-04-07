@@ -6,7 +6,7 @@ tangentialDistortion = [-0.00212 0.00152];
 
 cameraParams = cameraParameters('IntrinsicMatrix',K,'RadialDistortion',radialDistortion,'TangentialDistortion',tangentialDistortion);
 
-video_path = 'Data/heart/';
+video_path = 'Data/heart/left';
 start_frame = 1;
 end_frame = 1573;
 
