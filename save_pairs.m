@@ -4,6 +4,10 @@ base_path = 'Data/';
 start_frame = 1;
 end_frame = 1573;
 
+K = [530.90002, 0,         136.63037; 
+      0,         581.00362, 161.32884; 
+      0,         0,         1]; 
+
 %parameters according to the paper
 params.padding = 1.0;         			   % extra area surrounding the target
 params.output_sigma_factor = 1/16;		   % spatial bandwidth (proportional to target)
@@ -15,48 +19,61 @@ params.non_compressed_features = {'gray'}; % features that are not compressed, a
 params.compressed_features = {'cn'};       % features that are compressed, a cell with strings (possible choices: 'gray', 'cn')
 params.num_compressed_dim = 2;             % the dimensionality of the compressed features
 
-params.visualization = 1;
+params.visualization = 0;
 
 %ask the user for the video
 video_path = choose_video(base_path);
 if isempty(video_path), return, end  %user cancelled
 
-[img_files,video_path] = load_video_info(video_path,start_frame,end_frame);
-pos = [220,300];
-target_sz = [95, 95];
-params.init_pos = floor(pos) + floor(target_sz/2);
-params.wsize = floor(target_sz);
-params.img_files = img_files;
-params.video_path = video_path;
+video_path_left = [video_path 'Left/'];
+video_path_right = [video_path 'Right/'];
 
-[positions, fps] = color_tracker(params);
+[img_files_left,video_path_left] = load_video_info(video_path_left,start_frame,end_frame);
+[img_files_right,video_path_right] = load_video_info(video_path_right,start_frame,end_frame);
+
+img_l = imread([video_path_left img_files_left{1}]);
+img_r = imread([video_path_right img_files_right{1}]);
+
+% find pair in first frame
+[ p_l, p_r ] = Find2DPointPair(img_l, img_r);
+
+% calculate M2
+M2 = findM2(img_l,img_r,p_l,p_r,K,K);
+
+% track pairs over video and store their positions
+[pair_num,~] = size(p_l);
+pairs = cell(1,end_frame-start_frame+1);
+for i=1:end_frame-start_frame+1
+    pairs{i} = zeros(0,4);
+end
+
+target_sz = [65, 95];
+for i=1:pair_num
+    pos = p_l(i,:);
+    params.init_pos = floor(pos);
+    params.wsize = floor(target_sz);
+    params.img_files = img_files_left;
+    params.video_path = video_path_left;
+    [positions, ~] = color_tracker(params);
+    
+    for j=1:end_frame-start_frame+1
+        pairs{j} = [pairs{j};positions(j,1:2) 0 0];
+    end
+    
+    pos = p_r(i,:);
+    params.init_pos = floor(pos);
+    params.wsize = floor(target_sz);
+    params.img_files = img_files_right;
+    params.video_path = video_path_right;
+    [positions, ~] = color_tracker(params);
+    
+    for j=1:end_frame-start_frame+1
+        pairs{j}(end,3:4) = positions(j,1:2);
+    end
+    disp(i);
+end
 
 
 clear
 clc
 close all
-
-%% load video and extract image
-vidObj = VideoReader(strcat(video_path,'video.avi'));  % camera_static
-vidHeight = vidObj.Height;
-vidWidth = vidObj.Width;
-s = struct('cdata',zeros(vidHeight,vidWidth,3,'uint8'),...
-    'colormap',[]);
-
-k = 1;
-while hasFrame(vidObj)
-    s(k).cdata = readFrame(vidObj);
-    k = k+1;
-end
-
-img = s(5).cdata;
-img_l = im2double(img(:, 1:end/2, :)); img_r = im2double(img(:, end/2:end, :));
-figure,imshow(img_l, []); figure,imshow(img_r, []);
-
-%% find corresponding points
-[ p_l, p_r ] = Find2DPointPair(img_l, img_r);
-
-figure, imshow(img_l); hold on
-plot(p_l(:,2), p_l(:,1), '.g', 'MarkerSize', 6); hold off
-figure, imshow(img_r); hold on
-plot(p_r(:,2), p_r(:,1), '.g', 'MarkerSize', 6); hold off

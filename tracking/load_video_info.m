@@ -19,15 +19,22 @@ frames = {start_frame, end_frame};
 % ground_truth = [ground_truth(:,[2,1]) + (ground_truth(:,[4,3]) - 1) / 2 , ground_truth(:,[4,3])];
 
 %see if they are in the 'imgs' subfolder or not
-if exist([video_path num2str(frames{1}, 'imgs/img%05i.png')], 'file'),
-    video_path = [video_path 'imgs/'];
-    img_files = num2str((frames{1} : frames{2})', 'img%05i.png');
-elseif exist([video_path num2str(frames{1}, 'imgs/img%05i.jpg')], 'file'),
-    video_path = [video_path 'imgs/'];
-    img_files = num2str((frames{1} : frames{2})', 'img%05i.jpg');
-elseif exist([video_path num2str(frames{1}, 'imgs/img%05i.bmp')], 'file'),
-    video_path = [video_path 'imgs/'];
-    img_files = num2str((frames{1} : frames{2})', 'img%05i.bmp');
+% if exist([video_path num2str(frames{1}, 'imgs/img%05i.png')], 'file'),
+%     video_path = [video_path 'imgs/'];
+%     img_files = num2str((frames{1} : frames{2})', 'img%05i.png');
+% elseif exist([video_path num2str(frames{1}, 'imgs/img%05i.jpg')], 'file'),
+%     video_path = [video_path 'imgs/'];
+%     img_files = num2str((frames{1} : frames{2})', 'img%05i.jpg');
+% elseif exist([video_path num2str(frames{1}, 'imgs/img%05i.bmp')], 'file'),
+%     video_path = [video_path 'imgs/'];
+%     img_files = num2str((frames{1} : frames{2})', 'img%05i.bmp');
+
+if exist([video_path num2str(frames{1}, 'images/%05i_left.png')], 'file'),
+    video_path = [video_path 'images/'];
+    img_files = num2str((frames{1} : frames{2})', '%05i_left.png');
+elseif exist([video_path num2str(frames{1}, 'images/%05i_right.png')], 'file'),
+    video_path = [video_path 'images/'];
+    img_files = num2str((frames{1} : frames{2})', '%05i_right.png');
 else
     error('No image files to load.')
 end
