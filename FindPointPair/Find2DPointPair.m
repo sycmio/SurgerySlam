@@ -45,8 +45,8 @@ parfor i = 1:size(locsDoG1,1)
     
 end
 
-p1 = locsDoG1_new;
-p2 = locsDoG2_new;
+p1 = locsDoG1_new(:,end:-1:1);
+p2 = locsDoG2_new(:,end:-1:1);
 
 end
 

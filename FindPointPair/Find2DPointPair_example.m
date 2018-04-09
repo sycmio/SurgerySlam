@@ -23,7 +23,7 @@ figure,imshow(img_l, []); figure,imshow(img_r, []);
 [ p_l, p_r ] = Find2DPointPair(img_l, img_r);
 
 figure, imshow(img_l); hold on
-plot(p_l(:,2), p_l(:,1), '.g', 'MarkerSize', 6); hold off
+plot(p_l(:,1), p_l(:,2), '.g', 'MarkerSize', 6); hold off
 figure, imshow(img_r); hold on
-plot(p_r(:,2), p_r(:,1), '.g', 'MarkerSize', 6); hold off
+plot(p_r(:,1), p_r(:,2), '.g', 'MarkerSize', 6); hold off
 

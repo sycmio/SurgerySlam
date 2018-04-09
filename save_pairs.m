@@ -1,8 +1,8 @@
 addpath(genpath(pwd));
 
 base_path = 'Data/';
-start_frame = 1;
-end_frame = 1573;
+start_frame = 96;
+end_frame = 895;
 
 K = [530.90002, 0,         136.63037; 
       0,         581.00362, 161.32884; 
@@ -35,7 +35,7 @@ img_l = imread([video_path_left img_files_left{1}]);
 img_r = imread([video_path_right img_files_right{1}]);
 
 % find pair in first frame
-[ p_l, p_r ] = Find2DPointPair(img_l, img_r);
+% [ p_l, p_r ] = Find2DPointPair(img_l, img_r);
 
 % calculate M2
 M2 = findM2(img_l,img_r,p_l,p_r,K,K);
@@ -47,9 +47,9 @@ for i=1:end_frame-start_frame+1
     pairs{i} = zeros(0,4);
 end
 
-target_sz = [65, 95];
+target_sz = [80, 80];
 for i=1:pair_num
-    pos = p_l(i,:);
+    pos = p_l(i,end:-1:1);
     params.init_pos = floor(pos);
     params.wsize = floor(target_sz);
     params.img_files = img_files_left;
@@ -57,10 +57,10 @@ for i=1:pair_num
     [positions, ~] = color_tracker(params);
     
     for j=1:end_frame-start_frame+1
-        pairs{j} = [pairs{j};positions(j,1:2) 0 0];
+        pairs{j} = [pairs{j};positions(j,end-2:-1:1) 0 0];
     end
     
-    pos = p_r(i,:);
+    pos = p_r(i,end:-1:1);
     params.init_pos = floor(pos);
     params.wsize = floor(target_sz);
     params.img_files = img_files_right;
@@ -68,12 +68,9 @@ for i=1:pair_num
     [positions, ~] = color_tracker(params);
     
     for j=1:end_frame-start_frame+1
-        pairs{j}(end,3:4) = positions(j,1:2);
+        pairs{j}(end,3:4) = positions(j,end-2:-1:1);
     end
     disp(i);
+    clc
+    close all
 end
-
-
-clear
-clc
-close all

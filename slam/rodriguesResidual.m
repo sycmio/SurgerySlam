@@ -13,11 +13,12 @@ function residuals = rodriguesResidual(P,p1,p2,K1,K2,M_diff,x)
 %   residuals - 4Nx1 vector
 r1 = x(1:3);
 t1 = x(4:6);
-R1 = rotationVectorToMatrix(r1);
+R1 = rodrigues(r1);
 M1_homo = [R1 t1; 0 0 0 1];
 M2_homo = M1_homo*M_diff;
 M1 = [R1 t1];
 M2 = M2_homo(1:3,:);
+N = size(P,1);
 C1 = K1*M1;
 C2 = K2*M2;
 
