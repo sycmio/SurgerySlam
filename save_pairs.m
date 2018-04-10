@@ -1,12 +1,8 @@
 addpath(genpath(pwd));
 
 base_path = 'Data/';
-start_frame = 96;
-end_frame = 895;
-
-K = [530.90002, 0,         136.63037; 
-      0,         581.00362, 161.32884; 
-      0,         0,         1]; 
+start_frame = 1;
+end_frame = 416;
 
 %parameters according to the paper
 params.padding = 1.0;         			   % extra area surrounding the target
@@ -35,10 +31,10 @@ img_l = imread([video_path_left img_files_left{1}]);
 img_r = imread([video_path_right img_files_right{1}]);
 
 % find pair in first frame
-% [ p_l, p_r ] = Find2DPointPair(img_l, img_r);
+[ p_l, p_r ] = Find2DPointPair(img_l, img_r);
 
 % calculate M2
-M2 = findM2(img_l,img_r,p_l,p_r,K,K);
+% M2 = findM2(img_l,img_r,p_l,p_r,K,K);
 
 % track pairs over video and store their positions
 [pair_num,~] = size(p_l);
@@ -71,6 +67,5 @@ for i=1:pair_num
         pairs{j}(end,3:4) = positions(j,end-2:-1:1);
     end
     disp(i);
-    clc
     close all
 end

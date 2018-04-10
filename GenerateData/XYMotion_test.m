@@ -4,19 +4,19 @@ close all
 
 %% store the data in corresponding path (NoMotion)
 % make the directory for Left & Right Images
-path_xymotion = '../Data/SimulateData/XYMotion';
+path_xymotion = '../Data/SimulateData/XYMotion_test';
 tof = exist(path_xymotion, 'dir');
 if tof ~= 7
     mkdir(path_xymotion);
 end
 
-path_xymotion_left = '../Data/SimulateData/XYMotion/Left/images/';
+path_xymotion_left = '../Data/SimulateData/XYMotion_test/Left/images/';
 tof = exist(path_xymotion_left, 'dir');
 if tof ~= 7
     mkdir(path_xymotion_left);
 end
 
-path_xymotion_right = '../Data/SimulateData/XYMotion/Right/images/';
+path_xymotion_right = '../Data/SimulateData/XYMotion_test/Right/images/';
 tof = exist(path_xymotion_right, 'dir');
 if tof ~= 7
     mkdir(path_xymotion_right);
@@ -47,8 +47,8 @@ cameraParams2 = cameraParameters('IntrinsicMatrix', K2, ...
     'TangentialDistortion',tangentialDistortion2);
 
 % Put into corresponding folder
-path_xymotion_left = '../Data/SimulateData/XYMotion/Left/images/';
-path_xymotion_right = '../Data/SimulateData/XYMotion/Right/images/';
+path_xymotion_left = '../Data/SimulateData/XYMotion_test/Left/images/';
+path_xymotion_right = '../Data/SimulateData/XYMotion_test/Right/images/';
 
 crop = 6;
 s1 = struct('cdata',zeros(vidHeight,vidWidth/2-2*crop+1,3,'uint8'),'colormap',[]);
@@ -87,8 +87,8 @@ while hasFrame(vidObj)
     s1(k).cdata = I(:, crop:end/2-crop, :);
     s2(k).cdata = I(:, end/2+crop:end-crop, :);
     
-    img1 = s1(k).cdata;
-    img2 = s2(k).cdata;
+    img1 = s1(1).cdata;
+    img2 = s2(1).cdata;
     img1_corr = undistortImage(img1,cameraParams1);
     img2_corr = undistortImage(img2,cameraParams1);
     
@@ -103,4 +103,4 @@ while hasFrame(vidObj)
     k = k+1;
 end
 
-fprintf(strcat('XYMotion data done, saved in ', path_nomotion));
+fprintf(strcat('XYMotion_test data done, saved in ', path_nomotion));

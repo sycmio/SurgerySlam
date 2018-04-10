@@ -28,4 +28,5 @@ project_2_homo = (C2*([P ones(N,1)]'))';
 project_2 = project_2_homo(:,1:2)./project_2_homo(:,3);
 
 err = norm(reshape([p1-project_1; p2-project_2], [], 1))^2;
+P = real(P);
 end
