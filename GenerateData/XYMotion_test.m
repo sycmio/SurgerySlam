@@ -89,8 +89,8 @@ while hasFrame(vidObj)
     
     img1 = s1(1).cdata;
     img2 = s2(1).cdata;
-    img1_corr = undistortImage(img1,cameraParams1);
-    img2_corr = undistortImage(img2,cameraParams1);
+    img1_corr = undistortImage(img1,cameraParams1, 'OutputView', 'full');
+    img2_corr = undistortImage(img2,cameraParams2, 'OutputView', 'full');
     
     cy = h/2 + y_motionlist(k); cx = w/2 + x_motionlist(k);
     ry = cy - h_new/2:cy + h_new/2; rx = cx - w_new/2:cx + w_new/2; 
