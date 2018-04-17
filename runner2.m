@@ -1,4 +1,5 @@
 % suppose camera is static, get points trajatory
+addpath(genpath(pwd))
 
 % load('MyMat/pairs_xy.mat');
 

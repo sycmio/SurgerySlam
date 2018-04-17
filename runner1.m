@@ -1,4 +1,5 @@
 % suppose points are static, get camera pos
+addpath(genpath(pwd));
 
 load('MyMat/pairs_z.mat');
 
