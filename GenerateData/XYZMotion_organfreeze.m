@@ -4,22 +4,22 @@ close all
 
 %% store the data in corresponding path (ZMotion)
 % make the directory for Left & Right Images
-path_zmotion = '../Data/SimulateData/ZMotion';
-tof = exist(path_zmotion, 'dir');
+path_xyzmotion = '../Data/SimulateData/XYZMotion_organfreeze';
+tof = exist(path_xyzmotion, 'dir');
 if tof ~= 7
-    mkdir(path_zmotion);
+    mkdir(path_xyzmotion);
 end
 
-path_zmotion_left = '../Data/SimulateData/ZMotion/Left/images/';
-tof = exist(path_zmotion_left, 'dir');
+path_xyzmotion_left = '../Data/SimulateData/XYZMotion_organfreeze/Left/images/';
+tof = exist(path_xyzmotion_left, 'dir');
 if tof ~= 7
-    mkdir(path_zmotion_left);
+    mkdir(path_xyzmotion_left);
 end
 
-path_zmotion_right = '../Data/SimulateData/ZMotion/Right/images/';
-tof = exist(path_zmotion_right, 'dir');
+path_xyzmotion_right = '../Data/SimulateData/XYZMotion_organfreeze/Right/images/';
+tof = exist(path_xyzmotion_right, 'dir');
 if tof ~= 7
-    mkdir(path_zmotion_right);
+    mkdir(path_xyzmotion_right);
 end
 
 %% load video and extract image
@@ -47,19 +47,41 @@ cameraParams2 = cameraParameters('IntrinsicMatrix', K2, ...
     'TangentialDistortion',tangentialDistortion2);
 
 % Put into corresponding folder
-path_zmotion_left = '../Data/SimulateData/ZMotion/Left/images/';
-path_zmotion_right = '../Data/SimulateData/ZMotion/Right/images/';
+path_xyzmotion_left = '../Data/SimulateData/XYZMotion_organfreeze/Left/images/';
+path_xyzmotion_right = '../Data/SimulateData/XYZMotion_organfreeze/Right/images/';
 
 crop = 6;
 s1 = struct('cdata',zeros(vidHeight,vidWidth/2-2*crop+1,3,'uint8'),'colormap',[]);
 s2 = struct('cdata',zeros(vidHeight,vidWidth/2-2*crop+1,3,'uint8'),'colormap',[]);
 
+% XY motion list for moving the view of field (Camera)
+dis_yper = 0.4; 
+dis_y = floor(vidHeight * dis_yper / 2);
+y_m = floor([0:0.6:dis_y,...
+             dis_y:-0.6:0,...
+             0:-0.6:-dis_y, ...
+             -dis_y:0.6:0, ...
+             ]);  % assign the motion needed for each step
+
+dis_xper = 0.4;
+dis_x = floor((vidWidth/2-2*crop+1 ) * dis_xper / 2);
+x_m = floor([0:0.6:dis_x,...
+             dis_x:-0.6:0,...
+             0:-0.6:-dis_x, ...
+             -dis_x:0.6:0, ...
+             ]);  % assign the motion needed for each step
+x_motionlist = [x_m, zeros(size(y_m))];
+y_motionlist = [zeros(size(x_m)), y_m];
+
 % Add Z Motion
-zoom_factor = [1:0.001:1.25, 1.25:-0.001:1];% assign the motion needed for each step
+zoom_scale = 0.25;
+zoom_factor = ((-cos(0:0.05:2*pi*6) + 1))/2 * zoom_scale + 1; % assign the motion needed for each step
 
 % image size with the new view of field
 h = vidHeight;
 w = (vidWidth/2-2*crop+1);
+h_new = floor((1 - dis_yper) * h);
+w_new = floor((1 - dis_xper) * w);
 
 k = 1;
 while hasFrame(vidObj)
@@ -72,16 +94,23 @@ while hasFrame(vidObj)
     img1_corr = undistortImage(img1,cameraParams1);
     img2_corr = undistortImage(img2,cameraParams1);
     
+    % get the zoom in images
     img1_zoom = imresize(img1_corr, zoom_factor(k)); 
     img2_zoom = imresize(img2_corr, zoom_factor(k));
     c_r= floor(size(img1_zoom,1)/2); c_c = floor(size(img1_zoom,2)/2);
     img1_zoom = img1_zoom(c_r-h/2+1:c_r+h/2, c_c-w/2+1:c_c+w/2, :);
     img2_zoom = img2_zoom(c_r-h/2+1:c_r+h/2, c_c-w/2+1:c_c+w/2, :);
     
-    imwrite(img1_zoom, strcat(path_zmotion_left, sprintf('%05d_left.png', k)));
-    imwrite(img2_zoom, strcat(path_zmotion_right, sprintf('%05d_right.png', k)));
+    % get the cropped images
+    cy = h/2 + y_motionlist(k); cx = w/2 + x_motionlist(k);
+    ry = cy - h_new/2:cy + h_new/2; rx = cx - w_new/2:cx + w_new/2; 
+    img1_move = img1_zoom(ry, rx, :); img1_move = imresize(img1_move, [h w]);
+    img2_move = img2_zoom(ry, rx, :); img2_move = imresize(img2_move, [h w]);
+    
+    imwrite(img1_zoom, strcat(path_xyzmotion_left, sprintf('%05d_left.png', k)));
+    imwrite(img2_zoom, strcat(path_xyzmotion_right, sprintf('%05d_right.png', k)));
     
     k = k+1;
 end
 
-fprintf(strcat('ZMotion data done, saved in ', path_nomotion));
+fprintf(strcat('XYZMotion_organfreeze data done, saved in ', path_nomotion));

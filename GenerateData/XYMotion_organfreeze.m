@@ -10,13 +10,13 @@ if tof ~= 7
     mkdir(path_xymotion);
 end
 
-path_xymotion_left = '../Data/SimulateData/XYMotion_test/Left/images/';
+path_xymotion_left = '../Data/SimulateData/XYMotion_organfreeze/Left/images/';
 tof = exist(path_xymotion_left, 'dir');
 if tof ~= 7
     mkdir(path_xymotion_left);
 end
 
-path_xymotion_right = '../Data/SimulateData/XYMotion_test/Right/images/';
+path_xymotion_right = '../Data/SimulateData/XYMotion_organfreeze/Right/images/';
 tof = exist(path_xymotion_right, 'dir');
 if tof ~= 7
     mkdir(path_xymotion_right);
@@ -47,15 +47,15 @@ cameraParams2 = cameraParameters('IntrinsicMatrix', K2, ...
     'TangentialDistortion',tangentialDistortion2);
 
 % Put into corresponding folder
-path_xymotion_left = '../Data/SimulateData/XYMotion_test/Left/images/';
-path_xymotion_right = '../Data/SimulateData/XYMotion_test/Right/images/';
+path_xymotion_left = '../Data/SimulateData/XYMotion_organfreeze/Left/images/';
+path_xymotion_right = '../Data/SimulateData/XYMotion_organfreeze/Right/images/';
 
 crop = 6;
 s1 = struct('cdata',zeros(vidHeight,vidWidth/2-2*crop+1,3,'uint8'),'colormap',[]);
 s2 = struct('cdata',zeros(vidHeight,vidWidth/2-2*crop+1,3,'uint8'),'colormap',[]);
 
 % Add Camera Motion
-dis_yper = 0.2; 
+dis_yper = 0.25; 
 dis_y = floor(vidHeight * dis_yper / 2);
 y_m = floor([0:0.6:dis_y,...
              dis_y:-0.6:0,...
@@ -63,7 +63,7 @@ y_m = floor([0:0.6:dis_y,...
              -dis_y:0.6:0, ...
              ]);  % assign the motion needed for each step
 
-dis_xper = 0.2;
+dis_xper = 0.25;
 dis_x = floor((vidWidth/2-2*crop+1 ) * dis_xper / 2);
 x_m = floor([0:0.6:dis_x,...
              dis_x:-0.6:0,...
@@ -103,4 +103,4 @@ while hasFrame(vidObj)
     k = k+1;
 end
 
-fprintf(strcat('XYMotion_test data done, saved in ', path_nomotion));
+fprintf(strcat('XYMotion_organfreeze data done, saved in ', path_nomotion));
