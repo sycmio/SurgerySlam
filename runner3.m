@@ -1,3 +1,5 @@
+% dense reconstruction by first frame
+
 % addpath(genpath(pwd));
 % frame_num = 1;
 % img_path1 = num2str(frame_num, 'Data/XYMotion_test/Left/images/%05i_left.png');

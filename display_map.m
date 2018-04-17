@@ -21,20 +21,21 @@
 % plot(pairs{frame_num}(:,3), pairs{frame_num}(:,4), '.g', 'MarkerSize', 10);
 % hold off;
 
-N = length(Ps);
-
-% draw 3d points over time
-for i = 1:N
-    x = Ps{i}(:,1);
-    y = Ps{i}(:,2);
-    z = Ps{i}(:,3);
-    h = scatter3(x,y,z,'filled','MarkerFaceColor',[1 0 0]);
-    axis([-10 10 -10 10 22 30]);
-    drawnow
-    pause(0.1);
-    set(h,'Visible','off');
-end
-hold off;
+% N = length(Ps);
+% 
+% % draw 3d points over time
+% for i = 1:N
+%     x = Ps{i}(:,1);
+%     y = Ps{i}(:,2);
+%     z = Ps{i}(:,3);
+%     h = scatter3(x,y,z,'filled','MarkerFaceColor',[1 0 0]);
+%     axis([-10 10 -10 10 22 30]);
+% %     axis([-10 10 -10 10 8 18]);
+%     drawnow
+%     pause(0.1);
+%     set(h,'Visible','off');
+% end
+% hold off;
 
 % draw 3d points
 f3 = figure;
@@ -52,7 +53,7 @@ for i = 1:N
     oc_z = OC1(i,3);
     h = scatter3(oc_x,oc_y,oc_z,'filled','MarkerFaceColor',[0 0 1]);
     drawnow
-    pause(0.01);
+    pause(0.1);
     set(h,'Visible','off');
 end
 
