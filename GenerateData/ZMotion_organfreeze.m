@@ -56,7 +56,7 @@ s2 = struct('cdata',zeros(vidHeight,vidWidth/2-2*crop+1,3,'uint8'),'colormap',[]
 
 % Add Z Motion
 zoom_scale = 0.25;
-zoom_factor = ((-cos(0:0.05:2*pi*6) + 1))/2 * zoom_scale + 1; % assign the motion needed for each step
+zoom_factor = ((-cos(0:0.35:2*pi*6) + 1))/2 * zoom_scale + 1; % assign the motion needed for each step
 
 % image size with the new view of field
 h = vidHeight;

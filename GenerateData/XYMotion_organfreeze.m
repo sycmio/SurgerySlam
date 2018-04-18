@@ -4,7 +4,7 @@ close all
 
 %% store the data in corresponding path (NoMotion)
 % make the directory for Left & Right Images
-path_xymotion = '../Data/SimulateData/XYMotion_test';
+path_xymotion = '../Data/SimulateData/XYMotion_organfreeze';
 tof = exist(path_xymotion, 'dir');
 if tof ~= 7
     mkdir(path_xymotion);
