@@ -15,7 +15,7 @@ params.non_compressed_features = {'gray'}; % features that are not compressed, a
 params.compressed_features = {'cn'};       % features that are compressed, a cell with strings (possible choices: 'gray', 'cn')
 params.num_compressed_dim = 2;             % the dimensionality of the compressed features
 
-params.visualization = 1;
+params.visualization = 0;
 
 %ask the user for the video
 video_path = choose_video(base_path);
@@ -31,13 +31,13 @@ img_l = imread([video_path_left img_files_left{1}]);
 img_r = imread([video_path_right img_files_right{1}]);
 
 % find pair in first frame
-[ p_l, p_r ] = Find2DPointPair(img_l, img_r);
-% [ p_l, p_r ] = FindDensePair(rgb2gray(im2double(img_l)), rgb2gray(im2double(img_r)));
-% N = size(p_l,1);
-% rand_index = randperm(N);
-% rand_index = rand_index(1:20);
-% p_l = p_l(rand_index,:);
-% p_r = p_r(rand_index,:);
+% [ p_l, p_r ] = Find2DPointPair(img_l, img_r);
+[ p_l, p_r ] = FindDensePair(rgb2gray(im2double(img_l)), rgb2gray(im2double(img_r)));
+N = size(p_l,1);
+rand_index = randperm(N);
+rand_index = rand_index(1:20);
+p_l = p_l(rand_index,:);
+p_r = p_r(rand_index,:);
 
 % calculate M2
 % M2 = findM2(img_l,img_r,p_l,p_r,K,K);
