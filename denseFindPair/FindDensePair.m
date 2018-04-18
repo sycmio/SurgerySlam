@@ -82,7 +82,7 @@ y1_noffd_noaff = round(out(2, :))';
 % ind_valid = find(x1_noffd_noaff > 0 & x1_noffd_noaff < size(I1, 2) & ...
 %     y1_noffd_noaff > 0 & y1_noffd_noaff < size(I1, 1));
 ind_valid = find(x1_noffd_noaff > 30 & x1_noffd_noaff < size(I1, 2)-30 & ...
-    y1_noffd_noaff > 30 & y1_noffd_noaff < size(I1, 1))-30;
+    y1_noffd_noaff > 30 & y1_noffd_noaff < size(I1, 1)-30);
 
 x1_noffd_noaff_valid = x1_noffd_noaff(ind_valid);
 y1_noffd_noaff_valid = y1_noffd_noaff(ind_valid);
