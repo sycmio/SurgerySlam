@@ -61,12 +61,6 @@ for itt=1:10
 end
 toc
 
-% figure,
-% subplot(1,3,1), imshow(I1,[]); title('image 1');
-% subplot(1,3,2), imshow(I2,[]); title('image 2');
-% subplot(1,3,3), imshow(M,[]); title('Registered image 1');
-% figure, imshowpair(M, I2,'Scaling','joint');
-
 % find the small difference point and extract candidate feature points
 DIFF = abs(M - I2);
 thres_diff = 0.01;
@@ -80,9 +74,9 @@ x1_noffd = x2 - x_move;
 
 % correct the affine registration shift
 tformSimilarity_inv = invert(tformSimilarity);
-out = tformSimilarity_inv.T' * [y1_noffd' ; x1_noffd'; ones(size(x1_noffd))'];
-x1_noffd_noaff = round(out(2, :))';
-y1_noffd_noaff = round(out(1, :))';
+out = tformSimilarity_inv.T' * [x1_noffd' ; y1_noffd'; ones(size(x1_noffd))'];
+x1_noffd_noaff = round(out(1, :))';
+y1_noffd_noaff = round(out(2, :))';
 
 % only keep points within the image range
 ind_valid = find(x1_noffd_noaff > 0 & x1_noffd_noaff < size(I1, 2) & ...
@@ -94,10 +88,8 @@ x2_valid = x2(ind_valid);
 y2_valid = y2(ind_valid);
 
 % please note to comply with the demo, change to [x, y]
-% p1 = [x1_noffd_noaff_valid, y1_noffd_noaff_valid];
-% p2 = [x2_valid, y2_valid];
-p1 = [y1_noffd_noaff_valid, x1_noffd_noaff_valid];
-p2 = [y2_valid, x2_valid];
+p1 = [x1_noffd_noaff_valid, y1_noffd_noaff_valid];
+p2 = [x2_valid, y2_valid];
 
 end
 
