@@ -31,9 +31,13 @@ img_l = imread([video_path_left img_files_left{1}]);
 img_r = imread([video_path_right img_files_right{1}]);
 
 % find pair in first frame
-% [ p_l, p_r ] = Find2DPointPair(img_l, img_r);
-p_l = [160 211;69 89; 228 121];
-p_r = [138 203;60 85; 210 115];
+[ p_l, p_r ] = Find2DPointPair(img_l, img_r);
+% [ p_l, p_r ] = FindDensePair(rgb2gray(im2double(img_l)), rgb2gray(im2double(img_r)));
+% N = size(p_l,1);
+% rand_index = randperm(N);
+% rand_index = rand_index(1:20);
+% p_l = p_l(rand_index,:);
+% p_r = p_r(rand_index,:);
 
 % calculate M2
 % M2 = findM2(img_l,img_r,p_l,p_r,K,K);

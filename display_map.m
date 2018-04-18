@@ -2,23 +2,25 @@
 % load('MyMat\OC1.mat');
 % load('MyMat\pairs.mat');
 
-% frame_num=60;
+% frame_num=1;
 % 
 % f1 = figure;
-% img_path1 = num2str(frame_num, 'Data/XYMotion_test/Left/images/%05i_left.png');
+% img_path1 = num2str(frame_num, 'Data/ZMotion/Left/images/%05i_left.png');
 % 
 % I1 = imread(img_path1);
 % imshow(I1);
 % hold on;
-% plot(pairs{frame_num}(:,1), pairs{frame_num}(:,2), '.g', 'MarkerSize', 10);
+% for i=1:20
+%     plot(p_l(i,1), p_l(i,2), '.g', 'MarkerSize', 10);
+% end
 % hold off;
 % 
 % f2 = figure;
-% img_path2 = num2str(frame_num, 'Data/XYMotion_test/Right/images/%05i_right.png');
+% img_path2 = num2str(frame_num, 'Data/ZMotion/Right/images/%05i_right.png');
 % I2 = imread(img_path2);
 % imshow(I2);
 % hold on;
-% plot(pairs{frame_num}(:,3), pairs{frame_num}(:,4), '.g', 'MarkerSize', 10);
+% plot(p_r(:,1), p_r(:,2), '.g', 'MarkerSize', 10);
 % hold off;
 
 % N = length(Ps);
@@ -52,6 +54,7 @@ for i = 1:N
     oc_y = OC1(i,2);
     oc_z = OC1(i,3);
     h = scatter3(oc_x,oc_y,oc_z,'filled','MarkerFaceColor',[0 0 1]);
+    axis([-10 10 -10 10 -1 30]);
     drawnow
     pause(0.1);
     set(h,'Visible','off');
