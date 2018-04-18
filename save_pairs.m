@@ -2,7 +2,7 @@ addpath(genpath(pwd));
 
 base_path = 'Data/';
 start_frame = 1;
-end_frame = 416;
+end_frame = 144;
 
 %parameters according to the paper
 params.padding = 1.0;         			   % extra area surrounding the target
@@ -15,7 +15,7 @@ params.non_compressed_features = {'gray'}; % features that are not compressed, a
 params.compressed_features = {'cn'};       % features that are compressed, a cell with strings (possible choices: 'gray', 'cn')
 params.num_compressed_dim = 2;             % the dimensionality of the compressed features
 
-params.visualization = 0;
+params.visualization = 1;
 
 %ask the user for the video
 video_path = choose_video(base_path);

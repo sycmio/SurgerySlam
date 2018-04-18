@@ -31,7 +31,7 @@
 %     y = Ps{i}(:,2);
 %     z = Ps{i}(:,3);
 %     h = scatter3(x,y,z,'filled','MarkerFaceColor',[1 0 0]);
-%     axis([-10 10 -10 10 22 30]);
+%     axis([-20 20 -20 20 12 40]);
 % %     axis([-10 10 -10 10 8 18]);
 %     drawnow
 %     pause(0.1);
