@@ -1,4 +1,4 @@
-function residuals = rodriguesResidual(P_init,p1,p2,K1,K2,M_diff,x)
+function residuals = rodriguesResidual(P,p1,p2,K1,K2,M_diff,x)
 % rodriguesResidual:
 % Inputs:
 %   P  - Nx3 matrix of 3D coordinates
@@ -11,9 +11,8 @@ function residuals = rodriguesResidual(P_init,p1,p2,K1,K2,M_diff,x)
 
 % Output:
 %   residuals - 4Nx1 vector
-P = reshape(x(1:end-6),[],3);
-r1 = x(end-5:end-3);
-t1 = x(end-2:end);
+r1 = x(1:3);
+t1 = x(4:6);
 R1 = rodrigues(r1);
 M1_homo = [R1 t1; 0 0 0 1];
 M2_homo = M1_homo*M_diff;
@@ -27,8 +26,5 @@ project_1_homo = (C1*([P ones(N,1)]'))';
 project_1 = project_1_homo(:,1:2)./project_1_homo(:,3);
 project_2_homo = (C2*([P ones(N,1)]'))';
 project_2 = project_2_homo(:,1:2)./project_2_homo(:,3);
-residuals1 = reshape([p1-project_1; p2-project_2], [], 1);
-
-residuals2 = reshape(P_init-P,[],1);
-residuals = [residuals1;residuals2];
+residuals = reshape([p1-project_1; p2-project_2], [], 1);
 end
