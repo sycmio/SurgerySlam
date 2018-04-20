@@ -1,4 +1,4 @@
-function [Ps_mat_t, Period] = LocalizePointPCA(Ps, t)
+function [Ps_mat_t, Period] = LocalizePointPCA(Ps, t, minPeakDis, minPeakHei)
 % 1) Given n points trajectory (Ps), get PCA axis and estimate period
 % 2) Given desired time t and period, get the points locations 
 % return 
@@ -27,8 +27,8 @@ for i = 1:num_p
     [autocor, lags] = xcorr(s, 10,'coeff');  % set maxlag = the biggest period can observed
     
     % find short/long period
-    [pk, lc] = findpeaks(autocor, 'MinPeakDistance', 2, ...
-        'MinPeakheight',0.3);
+    [pk, lc] = findpeaks(autocor, 'MinPeakDistance', minPeakDis, ...
+        'MinPeakheight', minPeakHei);
     long = mean(diff(lc));
     
     Period_cur = [x_list(1:long)', y_list(1:long)', z_list(1:long)'];

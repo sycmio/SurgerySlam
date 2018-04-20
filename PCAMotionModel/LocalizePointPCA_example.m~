@@ -6,4 +6,4 @@ t = 1;
 
 minPeakDis=0;
 minPeakHei=0;
-[Ps_mat_t, Period] = LocalizePointPCA(Ps, t, minPeakDis, minPeakHei);
+[ Ps_t ] = LocalizePointPCA(Ps, t);
