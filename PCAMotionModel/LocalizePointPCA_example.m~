@@ -1,9 +1,0 @@
-Ps = [{randn(30,3)}, {randn(30,3)}, {randn(30,3)}, {randn(30,3)}, ...
-    {randn(30,3)}, {randn(30,3)}, {randn(30,3)}, {randn(30,3)}, ...
-    {randn(30,3)}, {randn(30,3)}, {randn(30,3)}, {randn(30,3)}, ...
-    {randn(30,3)}, {randn(30,3)}, {randn(30,3)}, {randn(30,3)}];
-t = 1;
-
-minPeakDis=0;
-minPeakHei=0;
-[ Ps_t ] = LocalizePointPCA(Ps, t);

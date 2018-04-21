@@ -1,16 +1,15 @@
-function [Ps_mat_t, Period] = LocalizePointPCA(Ps, t, minPeakDis, minPeakHei)
+function [Ps_mat_t, Period] = LocalizePointPCA(Ps, t_start, t_end, minPeakDis, minPeakHei)
 % 1) Given n points trajectory (Ps), get PCA axis and estimate period
 % 2) Given desired time t and period, get the points locations 
 % return 
-% Ps_mat_t: current location of points
+% Ps_mat_t: location of points [t_start -> t_end]
 % Period: points period
-
 
 num_p = size(Ps{1}, 1);
 Ps_mat = cell2mat(Ps);
 Period = cell(num_p, 1);
 
-Ps_mat_t = cell(1, num_p);
+Ps_mat_t = zeros(num_p, 3*(t_end - t_start + 1));
 for i = 1:num_p
     
     %% for each point's motion in x,y,z direction
@@ -33,11 +32,17 @@ for i = 1:num_p
     
     Period_cur = [x_list(1:long)', y_list(1:long)', z_list(1:long)'];
     Period{i} = Period_cur; % store the period
-    
+   
     %% reconstruct point position given t and principal axis
-    Ps_mat_t{i} = Period_cur(rem(t, long), :);
-    
+    t_ind = 1;
+    for t = t_start:t_end
+        Ps_mat_t(i, 3*(t_ind-1) + 1:3*(t_ind-1) + 3) = Period_cur(rem(t, long), :);
+        t_ind = t_ind + 1; 
+    end
+
 end
 
+Ps_mat_t = mat2cell(Ps_mat_t, num_p, 3 * ones(1, t_end-t_start+1));
+    
 end
 
