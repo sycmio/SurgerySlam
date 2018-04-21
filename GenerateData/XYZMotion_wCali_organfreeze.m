@@ -76,7 +76,7 @@ x_motionlist = [zeros(1,100), x_m, zeros(size(y_m))];
 y_motionlist = [zeros(1,100), zeros(size(x_m)), y_m];
 
 % Add Z Motion
-zoom_scale = 0.2;
+zoom_scale = 0.1;
 list_cos = linspace(0, 2*pi*12, length(x_motionlist));
 zoom_factor = ((-cos(list_cos) + 1))/2 * zoom_scale + 1; % assign the motion needed for each step
 
