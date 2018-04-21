@@ -4,19 +4,19 @@ close all
 
 %% store the data in corresponding path (ZMotion)
 % make the directory for Left & Right Images
-path_xyzmotion = '../Data/SimulateData/XYZMotion_organfreeze';
+path_xyzmotion = '../Data/SimulateData/XYZMotion_wCali_organfreeze';
 tof = exist(path_xyzmotion, 'dir');
 if tof ~= 7
     mkdir(path_xyzmotion);
 end
 
-path_xyzmotion_left = '../Data/SimulateData/XYZMotion_organfreeze/Left/images/';
+path_xyzmotion_left = '../Data/SimulateData/XYZMotion_wCali_organfreeze/Left/images/';
 tof = exist(path_xyzmotion_left, 'dir');
 if tof ~= 7
     mkdir(path_xyzmotion_left);
 end
 
-path_xyzmotion_right = '../Data/SimulateData/XYZMotion_organfreeze/Right/images/';
+path_xyzmotion_right = '../Data/SimulateData/XYZMotion_wCali_organfreeze/Right/images/';
 tof = exist(path_xyzmotion_right, 'dir');
 if tof ~= 7
     mkdir(path_xyzmotion_right);
@@ -47,8 +47,8 @@ cameraParams2 = cameraParameters('IntrinsicMatrix', K2, ...
     'TangentialDistortion',tangentialDistortion2);
 
 % Put into corresponding folder
-path_xyzmotion_left = '../Data/SimulateData/XYZMotion_organfreeze/Left/images/';
-path_xyzmotion_right = '../Data/SimulateData/XYZMotion_organfreeze/Right/images/';
+path_xyzmotion_left = '../Data/SimulateData/XYZMotion_wCali_organfreeze/Left/images/';
+path_xyzmotion_right = '../Data/SimulateData/XYZMotion_wCali_organfreeze/Right/images/';
 
 crop = 6;
 s1 = struct('cdata',zeros(vidHeight,vidWidth/2-2*crop+1,3,'uint8'),'colormap',[]);
@@ -118,4 +118,4 @@ while hasFrame(vidObj)
     k = k+1;
 end
 
-fprintf(strcat('XYZMotion_organfreeze data done, saved in ', path_nomotion));
+fprintf(strcat('XYZMotion_wCali_organfreeze data done, saved in ', path_nomotion));
