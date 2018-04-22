@@ -29,6 +29,7 @@ project_2_homo = (C2*([P ones(N,1)]'))';
 project_2 = project_2_homo(:,1:2)./project_2_homo(:,3);
 residuals1 = reshape([p1-project_1; p2-project_2], [], 1);
 
-residuals2 = reshape(P_init-P,[],1);
+weight = 1;
+residuals2 = reshape(P_init-P,[],1)*weight;
 residuals = [residuals1;residuals2];
 end

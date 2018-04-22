@@ -32,10 +32,10 @@ img_r = imread([video_path_right img_files_right{1}]);
 
 % find pair in first frame
 % [ p_l, p_r ] = Find2DPointPair(img_l, img_r);
-% [ p_l, p_r ] = FindDensePair(rgb2gray(im2double(img_l)), rgb2gray(im2double(img_r)));
+[ p_l, p_r ] = FindDensePair(rgb2gray(im2double(img_l)), rgb2gray(im2double(img_r)));
 N = size(p_l,1);
 rand_index = randperm(N);
-rand_index = rand_index(1:20);
+rand_index = rand_index(1:50);
 p_l = p_l(rand_index,:);
 p_r = p_r(rand_index,:);
 
@@ -49,14 +49,19 @@ for i=1:end_frame-start_frame+1
     pairs{i} = zeros(0,4);
 end
 
-target_sz = [120, 120];
+target_sz = [100, 100];
 for i=1:pair_num
     pos = p_l(i,end:-1:1);
     params.init_pos = floor(pos);
     params.wsize = floor(target_sz);
     params.img_files = img_files_left;
     params.video_path = video_path_left;
-    [positions, ~] = color_tracker(params);
+    
+    try
+        [positions, ~] = color_tracker(params);
+    catch
+        continue
+    end
     
     for j=1:end_frame-start_frame+1
         pairs{j} = [pairs{j};positions(j,end-2:-1:1) 0 0];
@@ -74,4 +79,5 @@ for i=1:pair_num
     end
     disp(i);
     close all
+    
 end

@@ -47,7 +47,7 @@ for i=2:all_frame_number
 %     p1 = pairs{i}(:,1:2);
 %     p2 = pairs{i}(:,3:4);
 %     [M1, M2] = localize_camera_from_points(P,p1,p2,K1,K2,M_diff,M1);
-    M = rigid_transform_3D(Ps{1},Ps{i});
+    M = Kabsch(Ps{1},Ps{i});
     M1s{i} = M1s{1}*M;
     M2s{i} = M1s{i}*M_diff;
 end

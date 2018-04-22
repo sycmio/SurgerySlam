@@ -31,22 +31,22 @@ for i = 1:num_p
     long = round(mean(diff(lc)));
     
     % compute Period_cur
-    tmp_start = 1;
-    Period_cur = zeros(long,3);
-    period_num = 3;
-    for j=1:period_num
-        tmp_end = tmp_start+lc(j+1)-lc(j)-1;
-        interval = (tmp_end-tmp_start)/(long-1);
-        x_interpolate = interp1(tmp_start:tmp_end,x_list(tmp_start:tmp_end),tmp_start:interval:tmp_end);
-        y_interpolate = interp1(tmp_start:tmp_end,y_list(tmp_start:tmp_end),tmp_start:interval:tmp_end);
-        z_interpolate = interp1(tmp_start:tmp_end,z_list(tmp_start:tmp_end),tmp_start:interval:tmp_end);
-        Period_cur = Period_cur + [x_interpolate',y_interpolate',z_interpolate'];
-        tmp_start = tmp_start+lc(j+1)-lc(j);
-    end
+%     tmp_start = 1;
+%     Period_cur = zeros(long,3);
+%     period_num = 3;
+%     for j=1:period_num
+%         tmp_end = tmp_start+lc(j+1)-lc(j)-1;
+%         interval = (tmp_end-tmp_start)/(long-1);
+%         x_interpolate = interp1(tmp_start:tmp_end,x_list(tmp_start:tmp_end),tmp_start:interval:tmp_end);
+%         y_interpolate = interp1(tmp_start:tmp_end,y_list(tmp_start:tmp_end),tmp_start:interval:tmp_end);
+%         z_interpolate = interp1(tmp_start:tmp_end,z_list(tmp_start:tmp_end),tmp_start:interval:tmp_end);
+%         Period_cur = Period_cur + [x_interpolate',y_interpolate',z_interpolate'];
+%         tmp_start = tmp_start+lc(j+1)-lc(j);
+%     end
+%     
+%     Period_cur = Period_cur/period_num;
     
-    Period_cur = Period_cur/period_num;
-    
-%     Period_cur = [x_list(1:long)', y_list(1:long)', z_list(1:long)'];
+    Period_cur = [x_list(1:long)', y_list(1:long)', z_list(1:long)'];
     Period{i} = Period_cur; % store the period
    
     %% reconstruct point position given t and principal axis
