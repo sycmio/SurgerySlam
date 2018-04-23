@@ -41,7 +41,7 @@ Ps_mat_t = Ps;
 
 % reconstruct points in each camera frame, find the camera position
 
-load('MyMat/pairs_real.mat');
+load('MyMat/pairs_real_ST.mat');
 Ps = cell(1,all_frame_number);
 for i=1:all_frame_number
     p1 = pairs{i}(:,1:2);
