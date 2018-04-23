@@ -80,6 +80,10 @@ zoom_scale = 0.1;
 list_cos = linspace(0, 2*pi*12, length(x_motionlist));
 zoom_factor = ((-cos(list_cos) + 1))/2 * zoom_scale + 1; % assign the motion needed for each step
 
+% Shift the view of field (Right Camera)
+x_shiftlist = -floor((zoom_factor - 1).*200);
+y_shiftlist = zeros(size(zoom_factor));
+
 % image size with the new view of field
 h = vidHeight;
 w = (vidWidth/2-2*crop+1);
@@ -105,8 +109,8 @@ while hasFrame(vidObj)
     img2_zoom = img2_zoom(c_r-h/2+1:c_r+h/2, c_c-w/2+1:c_c+w/2, :);
     
     % get the cropped images
-    cy = floor(h/2) + y_motionlist(k); 
-    cx = floor(w/2) + x_motionlist(k);
+    cy = floor(h/2) + y_motionlist(k) + y_shiftlist(k);
+    cx = floor(w/2) + x_motionlist(k) + x_shiftlist(k);
     ry = cy - floor(h_new/2):cy + floor(h_new/2); 
     rx = cx - floor(w_new/2):cx + floor(w_new/2); 
     img1_move = img1_zoom(ry, rx, :); img1_move = imresize(img1_move, [h w]);
