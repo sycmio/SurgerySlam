@@ -28,7 +28,7 @@ for i = 1:num_p
     % find short/long period
     [pk, lc] = findpeaks(autocor, 'MinPeakDistance', minPeakDis, ...
         'MinPeakheight', minPeakHei);
-    long = round(mean(diff(lc)));
+    long = round(mean(diff(lc))*100);
     
     % compute Period_cur
     tmp_start = 1;
@@ -52,7 +52,7 @@ for i = 1:num_p
     %% reconstruct point position given t and principal axis
     t_ind = 1;
     for t = t_start:t_end
-        Ps_mat_t(i, 3*(t_ind-1) + 1:3*(t_ind-1) + 3) = Period_cur(rem(t-1, long)+1, :);
+        Ps_mat_t(i, 3*(t_ind-1) + 1:3*(t_ind-1) + 3) = Period_cur(rem((t-1)*((long-1)/), long), :);
         t_ind = t_ind + 1; 
     end
 

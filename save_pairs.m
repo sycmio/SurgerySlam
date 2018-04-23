@@ -2,7 +2,7 @@ addpath(genpath(pwd));
 
 base_path = 'Data/';
 start_frame = 1;
-end_frame = 356;
+end_frame = 100;
 
 %parameters according to the paper
 params.padding = 1.0;         			   % extra area surrounding the target
@@ -35,7 +35,7 @@ img_r = imread([video_path_right img_files_right{1}]);
 [ p_l, p_r ] = FindDensePair(rgb2gray(im2double(img_l)), rgb2gray(im2double(img_r)));
 N = size(p_l,1);
 rand_index = randperm(N);
-rand_index = rand_index(1:50);
+rand_index = rand_index(1:20);
 p_l = p_l(rand_index,:);
 p_r = p_r(rand_index,:);
 
