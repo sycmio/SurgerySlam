@@ -81,6 +81,7 @@ list_cos = linspace(0, 2*pi*12, length(x_motionlist));
 zoom_factor = ((-cos(list_cos) + 1))/2 * zoom_scale + 1; % assign the motion needed for each step
 
 % Shift the view of field (Right Camera)
+disp = 0.05;
 x_shiftlist = -floor((zoom_factor - 1).*200);
 y_shiftlist = zeros(size(zoom_factor));
 
@@ -88,7 +89,7 @@ y_shiftlist = zeros(size(zoom_factor));
 h = vidHeight;
 w = (vidWidth/2-2*crop+1);
 h_new = floor((1 - dis_yper) * h);
-w_new = floor((1 - dis_xper) * w);
+w_new = floor((1 - (dis_xper+disp)) * w);
 
 k = 1;
 while hasFrame(vidObj)
