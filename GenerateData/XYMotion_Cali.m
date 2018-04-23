@@ -4,19 +4,19 @@ close all
 
 %% store the data in corresponding path (NoMotion)
 % make the directory for Left & Right Images
-path_xymotion = '../Data/SimulateData/NoMotion';
+path_xymotion = '../Data/SimulateData/XYMotion_wCali';
 tof = exist(path_xymotion, 'dir');
 if tof ~= 7
     mkdir(path_xymotion);
 end
 
-path_xymotion_left = '../Data/SimulateData/NoMotion/Left/images/';
+path_xymotion_left = '../Data/SimulateData/XYMotion_wCali/Left/images/';
 tof = exist(path_xymotion_left, 'dir');
 if tof ~= 7
     mkdir(path_xymotion_left);
 end
 
-path_xymotion_right = '../Data/SimulateData/NoMotion/Right/images/';
+path_xymotion_right = '../Data/SimulateData/XYMotion_wCali/Right/images/';
 tof = exist(path_xymotion_right, 'dir');
 if tof ~= 7
     mkdir(path_xymotion_right);
@@ -47,8 +47,8 @@ cameraParams2 = cameraParameters('IntrinsicMatrix', K2, ...
     'TangentialDistortion',tangentialDistortion2);
 
 % Put into corresponding folder
-path_xymotion_left = '../Data/SimulateData/NoMotion/Left/images/';
-path_xymotion_right = '../Data/SimulateData/NoMotion/Right/images/';
+path_xymotion_left = '../Data/SimulateData/XYMotion_wCali/Left/images/';
+path_xymotion_right = '../Data/SimulateData/XYMotion_wCali/Right/images/';
 
 crop = 6;
 s1 = struct('cdata',zeros(vidHeight,vidWidth/2-2*crop+1,3,'uint8'),'colormap',[]);
@@ -72,8 +72,8 @@ x_m = floor([0:2:dis_x,...
              ]);  % assign the motion needed for each step
 
 % motion list for moving the view of field
-x_motionlist = [zeros(size(x_m)), zeros(size(y_m))];
-y_motionlist = [zeros(size(x_m)), zeros(size(y_m))];
+x_motionlist = [zeros(1,100), x_m, zeros(size(y_m))];
+y_motionlist = [zeros(1,100), zeros(size(x_m)), y_m];
 
 % image size with the new view of field
 h = vidHeight;
@@ -105,4 +105,4 @@ while hasFrame(vidObj)
     k = k+1;
 end
 
-fprintf(strcat('NoMotion data done, saved in ', path_nomotion));
+fprintf(strcat('XYMotion data done, saved in ', path_nomotion));
