@@ -34,7 +34,7 @@ for i=1:cali_frame_number
 end
 t_start = 1; t_end = all_frame_number;
 
-minPeakDis=90; minPeakHei=0;
+minPeakDis=50; minPeakHei=0;
 [Ps_mat_t, Period] = LocalizePointPCA(Ps, t_start, t_end, minPeakDis, minPeakHei);
 
 % reconstruct points in each camera frame, find the camera position

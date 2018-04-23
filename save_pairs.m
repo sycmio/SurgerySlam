@@ -2,7 +2,7 @@ addpath(genpath(pwd));
 
 base_path = 'Data/';
 start_frame = 1;
-end_frame = 100;
+end_frame = 356;
 
 %parameters according to the paper
 params.padding = 1.0;         			   % extra area surrounding the target
