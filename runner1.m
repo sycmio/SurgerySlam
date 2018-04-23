@@ -52,11 +52,11 @@ for i=2:all_frame_number
     M2s{i} = M1s{i}*M_diff;
 end
 
-OC1 = zeros(all_frame_number,3);
-OC1_normal = zeros(all_frame_number,3);
+OC1_bad = zeros(all_frame_number,3);
+OC1_normal_bad = zeros(all_frame_number,3);
 for i=1:all_frame_number
     M1 = M1s{i};
     [OC,OC_normal] = compute_optical_center(M1);
-    OC1(i,:) = OC';
-    OC1_normal(i,:) = OC_normal';
+    OC1_bad(i,:) = OC';
+    OC1_normal_bad(i,:) = OC_normal';
 end
