@@ -1,5 +1,5 @@
 % This function takes 3-D points and their reprojection 2-D points in
-% setero camera, then return the estimation position of stereo camera.
+% setero camera, then do the bundle adjustment.
 % Inputs:
 %   P  - Nx3 matrix of 3D coordinates
 %   p1 - Nx2 set of points in left camera
